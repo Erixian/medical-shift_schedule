@@ -3,10 +3,12 @@ package com.medical_shift_schedule.model.service.imple;
 import com.medical_shift_schedule.model.Hospital;
 import com.medical_shift_schedule.model.repository.HospitalRepository;
 import com.medical_shift_schedule.model.service.HospitalService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Service
 public class HospitalServiceImple implements HospitalService {
     private final HospitalRepository hospitalRepository;
 

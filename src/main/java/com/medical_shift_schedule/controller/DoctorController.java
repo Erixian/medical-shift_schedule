@@ -27,7 +27,6 @@ public class DoctorController {
         model.addAttribute("doctors", doctors);
         return "/doctor/list-doctor";
     }
-
     @GetMapping("/doctor/create-doctor")
     public String showCreateForm(Model model){
         model.addAttribute("doctor", new Doctor());
@@ -35,13 +34,12 @@ public class DoctorController {
     }
 
     @PostMapping("/doctor/create-doctor")
-    public String create(@ModelAttribute Doctor doctorToCreate, Model model){ // Use Model for attributes
+    public String create(@ModelAttribute Doctor doctorToCreate, Model model){
         var doctorCreated = doctorService.create(doctorToCreate);
+        model.addAttribute("successMessage", "Doctor '"
+                            + doctorCreated.getName()
+                            + "' created successfully!");
 
-        // Add a success message to the model
-        model.addAttribute("successMessage", "Doctor '" + doctorCreated.getName() + "' created successfully!");
-
-        // Add a *new* empty Doctor object to the model so the form is fresh for another entry
         model.addAttribute("doctor", new Doctor());
 
         return "/doctor/create-doctor"; // Return the same template name
