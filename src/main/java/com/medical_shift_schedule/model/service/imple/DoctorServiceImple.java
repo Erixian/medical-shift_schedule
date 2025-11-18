@@ -12,13 +12,13 @@ import java.util.NoSuchElementException;
 public class DoctorServiceImple implements DoctorService {
     private final DoctorRepository doctorRepository;
 
+    public DoctorServiceImple(DoctorRepository doctorRepository){
+        this.doctorRepository = doctorRepository;
+    }
+
     @Override
     public List<Doctor> findAll() {
         return doctorRepository.findAll();
-    }
-
-    public DoctorServiceImple(DoctorRepository doctorRepository){
-        this.doctorRepository = doctorRepository;
     }
     @Override
     public Doctor findById(Long id) {
