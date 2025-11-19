@@ -42,6 +42,6 @@ public class DoctorController {
 
         model.addAttribute("doctor", new Doctor());
 
-        return "/doctor/create-doctor"; // Return the same template name
+        return "/doctor/create-doctor";
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create New Shift</title>
-    <!-- Keep your styles here (omitted for brevity) -->
+
     <style>
         /* ... your existing css ... */
     </style>
@@ -33,7 +33,6 @@
     <label for="hospital">Hospital:</label>
     <select id="hospital" th:field="*{hospital.id}" required>
         <option value="">-- Select Hospital --</option>
-        <!-- Remove th:selected. th:field handles it automatically -->
         <option th:each="hosp : ${allHospitals}"
                 th:value="${hosp.id}"
                 th:text="${hosp.name}">

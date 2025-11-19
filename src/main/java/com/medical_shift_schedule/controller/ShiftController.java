@@ -77,7 +77,6 @@ public class ShiftController {
             model.addAttribute("shift", shiftToCreate);
         }
 
-        // Reload lists for the dropdowns
         model.addAttribute("allHospitals", hospitalService.findAll());
         model.addAttribute("allDoctors", doctorService.findAll());
 
