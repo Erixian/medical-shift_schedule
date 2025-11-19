@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Plantões do Médico</title>
+</head>
+<body>
+<div class="container">
+    <h1>Plantões do Dr. <span th:text="${doctor.name}">Nome</span></h1>
+
+    <div th:if="${shifts.empty}">
+        <p>Nenhum plantão encontrado para este médico.</p>
+    </div>
+
+    <table th:unless="${shifts.empty}" border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Início</th>
+            <th>Término</th>
+            <th>Hospital</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="shift : ${shifts}">
+            <td th:text="${shift.id}"></td>
+            <td th:text="${shift.startTime}"></td>
+            <td th:text="${shift.endTime}"></td>
+            <td th:text="${shift.hospital.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a th:href="@{/doctor/list-doctor}">← Voltar para Lista de Médicos</a>
+</div>
+</body>
+</html>

@@ -12,4 +12,5 @@ public interface ShiftService {
     Shift findById(Long id);
     Shift create(Shift shiftToCreate);
     void delete(Long id);
+    List<Shift> findShiftsByDoctor(Long doctorId);
 }

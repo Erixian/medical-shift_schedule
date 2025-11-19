@@ -6,6 +6,7 @@ import com.medical_shift_schedule.model.Shift;
 import com.medical_shift_schedule.model.repository.DoctorRepository;
 import com.medical_shift_schedule.model.repository.HospitalRepository;
 import com.medical_shift_schedule.model.repository.ShiftRepository;
+import com.medical_shift_schedule.model.service.DoctorService;
 import com.medical_shift_schedule.model.service.ShiftService;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +17,22 @@ import java.util.NoSuchElementException;
 @Service
 public class ShiftServiceImple implements ShiftService {
     private final ShiftRepository shiftRepository;
-    private final DoctorRepository doctorRepository;   // Inject repositories for validation
-    private final HospitalRepository hospitalRepository; // Inject repositories for validation
+    private final DoctorRepository doctorRepository;
+    private final HospitalRepository hospitalRepository;
+    private final DoctorService doctorService;
 
-    // Constructor should only inject the repositories it directly uses
     public ShiftServiceImple(ShiftRepository shiftRepository,
                              DoctorRepository doctorRepository,
-                             HospitalRepository hospitalRepository) {
+                             HospitalRepository hospitalRepository, DoctorService doctorService) {
         this.shiftRepository = shiftRepository;
         this.doctorRepository = doctorRepository;
         this.hospitalRepository = hospitalRepository;
+        this.doctorService = doctorService;
+    }
+
+    @Override
+    public List<Shift> findShiftsByDoctor(Long doctorId) {
+        return shiftRepository.findShiftsByDoctorId(doctorId);
     }
 
     @Override
@@ -45,7 +52,6 @@ public class ShiftServiceImple implements ShiftService {
 
         if(shiftToCreate.getDoctorList() != null) {
             for(Doctor inputDoc : shiftToCreate.getDoctorList()) {
-                // SKIP empty dropdowns (where ID is null)
                 if (inputDoc.getId() != null) {
                     Doctor existingDoctor = doctorRepository.findById(inputDoc.getId())
                             .orElseThrow(() -> new NoSuchElementException("Doctor with ID "

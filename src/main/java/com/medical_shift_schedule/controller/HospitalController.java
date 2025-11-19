@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/")
 public class HospitalController {
     private final HospitalService hospitalService;
+
     public HospitalController(HospitalService hospitalService) {
         this.hospitalService = hospitalService;
     }

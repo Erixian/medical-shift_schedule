@@ -22,7 +22,7 @@
         <td th:text="${doctor.name}"></td>
         <td th:text="${doctor.crm}"></td>
         <td>
-            <a th:href="@{/doctors/{id}(id=${doctor.id})}">View</a> |
+            <a th:href="@{/doctor/list-doctor-shifts/{id}(id=${doctor.id})}">View</a>
             <a th:href="@{/doctors/{id}/edit(id=${doctor.id})}">Edit</a> |
             <form th:action="@{/doctors/{id}/delete(id=${doctor.id})}" method="post" style="display:inline;">
                 <button type="submit">Delete</button>

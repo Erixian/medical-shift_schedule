@@ -1,12 +1,11 @@
 package com.medical_shift_schedule.controller;
 
 import com.medical_shift_schedule.model.Doctor;
+import com.medical_shift_schedule.model.Shift;
 import com.medical_shift_schedule.model.service.DoctorService;
+import com.medical_shift_schedule.model.service.ShiftService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 import javax.print.Doc;
@@ -16,9 +15,20 @@ import java.util.List;
 @RequestMapping("/")
 public class DoctorController {
     private final DoctorService doctorService;
+    private final ShiftService shiftService;
 
-    public DoctorController(DoctorService doctorService) {
+    public DoctorController(DoctorService doctorService, ShiftService shiftService) {
         this.doctorService = doctorService;
+        this.shiftService = shiftService;
+    }
+
+    @GetMapping("/doctor/list-doctor-shifts/{id}")
+    public String getDoctorShifts(@PathVariable Long id, Model model) {
+        Doctor doctor = doctorService.findById(id);
+        List<Shift> doctorShifts = shiftService.findShiftsByDoctor(id);
+        model.addAttribute("shifts", doctorShifts);
+        model.addAttribute("doctor", doctor);
+        return "/doctor/list-doctor-shifts";
     }
 
     @GetMapping("/doctor/list-doctor")
@@ -27,6 +37,7 @@ public class DoctorController {
         model.addAttribute("doctors", doctors);
         return "/doctor/list-doctor";
     }
+
     @GetMapping("/doctor/create-doctor")
     public String showCreateForm(Model model){
         model.addAttribute("doctor", new Doctor());
