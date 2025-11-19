@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Shift</title>
+    <!-- Keep your styles here (omitted for brevity) -->
+    <style>
+        /* ... your existing css ... */
+    </style>
+</head>
+<body>
+<p><a th:href="@{/home}">Back to Home Page</a></p>
+<h1>Add New Shift</h1>
+
+<div th:if="${successMessage}" class="success-message">
+    <p th:text="${successMessage}"></p>
+    <p th:if="${shift.endTime != null}">Calculated End Time: <span th:text="${#temporals.format(shift.endTime, 'dd-MM-yyyy HH:mm')}"></span></p>
+</div>
+<div th:if="${errorMessage}" class="error-message">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<form th:action="@{/shift/create-shift}" th:object="${shift}" method="post">
+    <label for="startTime">Start Time:</label>
+    <input type="datetime-local" id="startTime" th:field="*{startTime}" required/><br/><br/>
+
+    <label>End Time:</label>
+    <span class="read-only-field">
+        This will be calculated automatically.
+    </span><br/><br/>
+
+
+    <label for="hospital">Hospital:</label>
+    <select id="hospital" th:field="*{hospital.id}" required>
+        <option value="">-- Select Hospital --</option>
+        <!-- Remove th:selected. th:field handles it automatically -->
+        <option th:each="hosp : ${allHospitals}"
+                th:value="${hosp.id}"
+                th:text="${hosp.name}">
+            Hospital Name
+        </option>
+    </select>
+
+
+    <label>Doctors:</label>
+    <div id="doctor-list-container">
+        <div th:each="doctor, stat : *{doctorList}" class="doctor-entry">
+            <!-- Using doctorList[i].id to bind specific index -->
+            <select th:field="*{doctorList[__${stat.index}__].id}">
+                <option value="">-- Select Doctor --</option>
+                <option th:each="doc : ${allDoctors}"
+                        th:value="${doc.id}"
+                        th:text="${doc.name}"
+                        th:selected="${doctor.id != null and doctor.id == doc.id}">
+                    Doctor Name
+                </option>
+            </select>
+        </div>
+    </div>
+    <small style="margin-left: 130px;">Select up to 4 doctors. Leave fields blank for fewer.</small><br/><br/>
+
+    <button type="submit">Create Shift</button>
+</form>
+
+<p><a th:href="@{/shift/list-shift}">Back to Shifts List</a></p>
+</body>
+</html>

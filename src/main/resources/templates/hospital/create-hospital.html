@@ -17,23 +17,22 @@
     </style>
 </head>
 <body>
+<p><a th:href="@{/home}">Back to Home Page</a></p>
 <h1>Add new Hospital</h1>
 
-<!-- Display success message if present -->
 <div th:if="${successMessage}" class="success-message">
     <p th:text="${successMessage}"></p>
 </div>
 
-<!-- The form for creating a doctor -->
-<form th:action="@{/doctor/create-doctor}" th:object="${doctor}" method="post">
+<form th:action="@{/hospital/create-hospital}" th:object="${hospital}" method="post">
     <label for="name">Name:</label>
     <input type="text" id="name" th:field="*{name}" required/><br/><br/>
 
-    <label for="crm">CRM:</label>
-    <input type="text" id="crm" th:field="*{crm}" required/><br/><br/>
+    <label for="address">address:</label>
+    <input type="text" id="address" th:field="*{address}" required/><br/><br/>
 
-    <button type="submit">Save Doctor</button>
+    <button type="submit">Save Hospital</button>
 </form>
-<p><a th:href="@{/doctor/list-doctor}">Back to List</a></p>
+<p><a th:href="@{/hospital/list-hospital}">Back to List</a></p>
 </body>
 </html>

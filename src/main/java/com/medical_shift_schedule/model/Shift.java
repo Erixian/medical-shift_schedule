@@ -23,6 +23,14 @@ public class Shift {
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
+    public Hospital getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
+    }
+
     public Long getId() {
         return id;
     }
@@ -43,8 +51,8 @@ public class Shift {
         return endTime;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
+    public void setEndTime(LocalDateTime time) {
+        this.endTime = time;
     }
 
     public List<Doctor> getDoctorList() {

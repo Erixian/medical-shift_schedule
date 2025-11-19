@@ -19,12 +19,12 @@
 <body>
 <h1>Create New Doctor</h1>
 
-<!-- Display success message if present -->
+
 <div th:if="${successMessage}" class="success-message">
     <p th:text="${successMessage}"></p>
 </div>
 
-<!-- The form for creating a doctor -->
+
 <form th:action="@{/doctor/create-doctor}" th:object="${doctor}" method="post">
     <label for="name">Name:</label>
     <input type="text" id="name" th:field="*{name}" required/><br/><br/>

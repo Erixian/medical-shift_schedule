@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital List</title>
+</head>
+<body>
+<p><a th:href="@{/home}">Back to home page</a></p>
+<h1>Hospitals</h1>
+<p th:if="${message}" th:text="${message}" style="color: green;"></p>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="hospital : ${hospitals}">
+        <td th:text="${hospital.id}"></td>
+        <td th:text="${hospital.name}"></td>
+        <td th:text="${hospital.address}"></td>
+        <td>
+            <a th:href="@{/hospitals/{id}/edit(id=${hospital.id})}">Edit</a> |
+            <form th:action="@{/hospitals/{id}/delete(id=${hospital.id})}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p><a th:href="@{/hospital/create-hospital}">Add New Hospital</a></p>
+</body>
+</html>
