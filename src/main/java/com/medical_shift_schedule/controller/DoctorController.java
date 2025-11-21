@@ -22,6 +22,11 @@ public class DoctorController {
         this.shiftService = shiftService;
     }
 
+    /*@GetMapping("/doctor/list-doctor/{doctorName}")
+    public String searchDoctor(@PathVariable String name, Model model){
+        Doctor doctor = doctorService.findByName(name);
+    }*/
+
     @GetMapping("/doctor/list-doctor-shifts/{id}")
     public String getDoctorShifts(@PathVariable Long id, Model model) {
         Doctor doctor = doctorService.findById(id);

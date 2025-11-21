@@ -17,6 +17,11 @@ public class DoctorServiceImple implements DoctorService {
     }
 
     @Override
+    public Doctor findByName(String name) {
+        return doctorRepository.findByName(name);
+    }
+
+    @Override
     public List<Doctor> findAll() {
         return doctorRepository.findAll();
     }

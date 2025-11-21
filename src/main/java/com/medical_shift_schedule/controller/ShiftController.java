@@ -38,11 +38,11 @@ public class ShiftController {
         }
     }
 
-    @GetMapping("/shift/list-shift")
+    @GetMapping("shift/list-shift")
     public String listShifts(Model model) {
         List<Shift> shiftList = shiftService.findAll();
         model.addAttribute("shift", shiftList);
-        return "/shift/list-shift";
+        return "shift/list-shift";
     }
 
     @GetMapping("/shift/create-shift")
