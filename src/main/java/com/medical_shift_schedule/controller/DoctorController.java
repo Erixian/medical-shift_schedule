@@ -47,7 +47,7 @@ public class DoctorController {
     public String listDoctors(Model model) {
         List<Doctor> doctors = doctorService.findAll();
         model.addAttribute("doctors", doctors);
-        return "/doctor/list-doctor";
+        return "doctor/list-doctor";
     }
 
     @GetMapping("doctor/create-doctor")
@@ -65,6 +65,6 @@ public class DoctorController {
 
         model.addAttribute("doctor", new Doctor());
 
-        return "/doctor/create-doctor";
+        return "doctor/create-doctor";
     }
 }
