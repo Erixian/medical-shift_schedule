@@ -21,7 +21,7 @@ public class DoctorController {
         this.shiftService = shiftService;
     }
 
-    @GetMapping("/doctor/list")
+    @GetMapping("doctor/list")
     public String listDoctors(@RequestParam(required = false) String name, Model model) {
         List<Doctor> doctors;
         if (name != null && !name.trim().isEmpty()) {
@@ -34,26 +34,26 @@ public class DoctorController {
         return "doctor/list-doctor";
     }
 
-    @GetMapping("/doctor/list-doctor-shifts/{id}")
+    @GetMapping("doctor/list-doctor-shifts/{id}")
     public String getDoctorShifts(@PathVariable Long id, Model model) {
         Doctor doctor = doctorService.findById(id);
         List<Shift> doctorShifts = shiftService.findShiftsByDoctor(id);
         model.addAttribute("shifts", doctorShifts);
         model.addAttribute("doctor", doctor);
-        return "/doctor/list-doctor-shifts";
+        return "doctor/list-doctor-shifts";
     }
 
-    @GetMapping("/doctor/list-doctor")
+    @GetMapping("doctor/list-doctor")
     public String listDoctors(Model model) {
         List<Doctor> doctors = doctorService.findAll();
         model.addAttribute("doctors", doctors);
         return "/doctor/list-doctor";
     }
 
-    @GetMapping("/doctor/create-doctor")
+    @GetMapping("doctor/create-doctor")
     public String showCreateForm(Model model){
         model.addAttribute("doctor", new Doctor());
-        return "/doctor/create-doctor";
+        return "doctor/create-doctor";
     }
 
     @PostMapping("/doctor/create-doctor")
