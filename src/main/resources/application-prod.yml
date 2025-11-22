@@ -7,14 +7,21 @@ spring:
 
     # --- ADD THIS SECTION ---
     hikari:
-      # How long a connection sits in the pool before being retired (10 minutes)
-      # This must be shorter than the database's timeout (which is usually 30-60 mins)
-      max-lifetime: 600000
-      # How long to wait for a connection before failing
-      connection-timeout: 30000
-      # Keep a small number of idle connections
-      minimum-idle: 2
-      maximum-pool-size: 10
+      # ... your url, username, password lines remain here ...
+
+      hikari:
+        # Maximum time a connection can sit in the pool (Set to 2 minutes)
+        max-lifetime: 120000
+
+        # Send a "ping" to the database every 1 minute to keep the line open
+        keepalive-time: 60000
+
+        # How long to wait for a new connection before giving up
+        connection-timeout: 30000
+
+        # Keep fewer idle connections to save memory
+        minimum-idle: 2
+        maximum-pool-size: 5
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
