@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Shift List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/doctor.css}">
 </head>
 <body>
+<p><a th:href="@{/home}">Back to Home Page</a></p>
 <h1>Shifts</h1>
 <p th:if="${message}" th:text="${message}" style="color: green;"></p>
 <table>

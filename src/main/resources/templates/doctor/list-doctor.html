@@ -3,10 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Doctors List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/doctor.css}">
 </head>
 <body>
+<p><a th:href="@{/home}">Back to Home Page</a></p>
 <h1>Doctors</h1>
+
+<form th:action="@{/doctor/list}" method="get" style="margin-bottom: 20px;">
+    <label for="name">Search Doctor by Name:</label>
+    <input type="text" id="name" name="name"
+           th:value="${searchName}"
+           placeholder="Enter doctor name">
+    <button type="submit">Search</button>
+    <a th:href="@{/doctor/list}">Show All</a>
+</form>
+
 <p th:if="${message}" th:text="${message}" style="color: green;"></p>
+
 <table>
     <thead>
     <tr>
@@ -31,6 +44,11 @@
     </tr>
     </tbody>
 </table>
+
+<div th:if="${doctors != null && doctors.empty}">
+    <p>No doctors found.</p>
+</div>
+
 <p><a th:href="@{/doctor/create-doctor}">Create New Doctor</a></p>
 </body>
 </html>

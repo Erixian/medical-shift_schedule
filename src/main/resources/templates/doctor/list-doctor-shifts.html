@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Plantões do Médico</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/doctor.css}">
 </head>
 <body>
+<p><a th:href="@{/home}">Back to Home Page</a></p>
 <div class="container">
     <h1>Plantões do Dr. <span th:text="${doctor.name}">Nome</span></h1>
 

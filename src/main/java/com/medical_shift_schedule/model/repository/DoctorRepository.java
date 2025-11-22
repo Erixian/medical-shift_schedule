@@ -13,6 +13,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     boolean existsByCrm(String crm);
     List<Doctor> findAll();
 
-    @Query("SELECT d.id FROM tb_doctor d WHERE d.name = :doctorName")
-    Doctor findByName(@Param("doctorName") String doctorName);
+    @Query("SELECT d FROM tb_doctor d WHERE d.name LIKE %:doctorName%")
+    List<Doctor> findByNameContaining(@Param("doctorName") String doctorName);
 }

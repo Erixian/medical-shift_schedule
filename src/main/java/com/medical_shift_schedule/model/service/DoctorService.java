@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DoctorService {
 
-    Doctor findByName(String name);
+    List<Doctor> findByNameContaining(String name);
 
     List<Doctor> findAll();
 

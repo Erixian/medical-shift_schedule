@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
-import javax.print.Doc;
 import java.util.List;
 
 @Controller
@@ -22,10 +21,18 @@ public class DoctorController {
         this.shiftService = shiftService;
     }
 
-    /*@GetMapping("/doctor/list-doctor/{doctorName}")
-    public String searchDoctor(@PathVariable String name, Model model){
-        Doctor doctor = doctorService.findByName(name);
-    }*/
+    @GetMapping("/doctor/list")
+    public String listDoctors(@RequestParam(required = false) String name, Model model) {
+        List<Doctor> doctors;
+        if (name != null && !name.trim().isEmpty()) {
+            doctors = doctorService.findByNameContaining(name.trim());
+            model.addAttribute("searchName", name);
+        } else {
+            doctors = doctorService.findAll();
+        }
+        model.addAttribute("doctors", doctors);
+        return "doctor/list-doctor";
+    }
 
     @GetMapping("/doctor/list-doctor-shifts/{id}")
     public String getDoctorShifts(@PathVariable Long id, Model model) {
