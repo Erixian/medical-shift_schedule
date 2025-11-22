@@ -1,10 +1,20 @@
 spring:
   datasource:
-    # Use Railway variables directly
     url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
     username: ${PGUSER}
     password: ${PGPASSWORD}
     driver-class-name: org.postgresql.Driver
+
+    # --- ADD THIS SECTION ---
+    hikari:
+      # How long a connection sits in the pool before being retired (10 minutes)
+      # This must be shorter than the database's timeout (which is usually 30-60 mins)
+      max-lifetime: 600000
+      # How long to wait for a connection before failing
+      connection-timeout: 30000
+      # Keep a small number of idle connections
+      minimum-idle: 2
+      maximum-pool-size: 10
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
