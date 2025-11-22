@@ -45,17 +45,17 @@ public class ShiftController {
         return "shift/list-shift";
     }
 
-    @GetMapping("/shift/create-shift")
+    @GetMapping("shift/create-shift")
     public String showCreatedShiftForm(Model model) {
         Shift shift = new Shift();
         formatDoctorList(shift);
         model.addAttribute("shift", shift);
         model.addAttribute("allHospitals", hospitalService.findAll());
         model.addAttribute("allDoctors", doctorService.findAll());
-        return "/shift/create-shift";
+        return "shift/create-shift";
     }
 
-    @PostMapping("/shift/create-shift")
+    @PostMapping("shift/create-shift")
     public String create(@ModelAttribute Shift shiftToCreate, Model model) {
 
         System.out.println("--- DEBUG START ---");
@@ -80,6 +80,6 @@ public class ShiftController {
         model.addAttribute("allHospitals", hospitalService.findAll());
         model.addAttribute("allDoctors", doctorService.findAll());
 
-        return "/shift/create-shift";
+        return "shift/create-shift";
     }
 }

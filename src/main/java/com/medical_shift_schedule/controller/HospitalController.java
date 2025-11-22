@@ -22,20 +22,20 @@ public class HospitalController {
         this.hospitalService = hospitalService;
     }
 
-    @GetMapping("/hospital/list-hospital")
+    @GetMapping("hospital/list-hospital")
     public String listHospital(Model model) {
         List<Hospital> hospitals = hospitalService.findAll();
         model.addAttribute("hospitals", hospitals);
-        return "/hospital/list-hospital";
+        return "hospital/list-hospital";
     }
 
-    @GetMapping("/hospital/create-hospital")
+    @GetMapping("hospital/create-hospital")
     public String showCreateForm(Model model){
         model.addAttribute("hospital", new Hospital());
-        return "/hospital/create-hospital";
+        return "hospital/create-hospital";
     }
 
-    @PostMapping("/hospital/create-hospital")
+    @PostMapping("hospital/create-hospital")
     public String create(@ModelAttribute Hospital hospitalToCreate, Model model){
         var hospitalCreated = hospitalService.create(hospitalToCreate);
         model.addAttribute("successMessage", "Hospital '"
@@ -44,6 +44,6 @@ public class HospitalController {
 
         model.addAttribute("hospital", new Hospital());
 
-        return "/hospital/create-hospital";
+        return "hospital/create-hospital";
     }
 }
