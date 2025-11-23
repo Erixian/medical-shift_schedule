@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Shift</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/geral.css}">
+</head>
+<body>
+<p><a th:href="@{/}">Back to Home Page</a></p>
+<p><a th:href="@{/shift/list-shift}">Back to Shift List</a></p>
+
+<h1>Edit Shift</h1>
+
+<div th:if="${successMessage}" style="color: green; font-weight: bold;">
+    <p th:text="${successMessage}"></p>
+</div>
+<div th:if="${errorMessage}" style="color: red; font-weight: bold;">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<div style="background: #f5f5f5; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+    <h3>Informações sobre o Plantão:</h3>
+    <p><strong>ID:</strong> <span th:text="${shift.id}"></span></p>
+    <p><strong>Hospital:</strong> <span th:text="${shift.hospital.name}"></span></p>
+    <p><strong>Data/Hora inicio:</strong> <span th:text="${shift.startTime}"></span></p>
+    <p><strong>Data/Hora fim:</strong> <span th:text="${shift.endTime}"></span></p>
+</div>
+
+<form th:action="@{/shift/{id}/edit(id=${shift.id})}" th:object="${shift}" method="post">
+    <h3>Gerencie os plantonistas para esse plantão:</h3>
+
+    <div th:each="doctor, iterStat : ${shift.doctorList}">
+        <div style="margin-bottom: 15px;">
+            <label th:text="'Doctor ' + ${iterStat.index + 1} + ':'"></label>
+            <select th:field="*{doctorList[__${iterStat.index}__].id}">
+                <option value="">-- Selecione um Médico(a) --</option>
+                <option th:each="doc : ${allDoctors}"
+                        th:value="${doc.id}"
+                        th:text="${doc.name} + ' - CRM: ' + ${doc.crm}"
+                        th:selected="${doctor.id == doc.id}">
+                </option>
+            </select>
+            <span th:if="${doctor.id != null}"
+                  style="margin-left: 10px; color: #666;">
+                    (Current: <span th:text="${doctor.name}"></span>)
+                </span>
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <button type="submit">Atualizar Plantonistas</button>
+        <a th:href="@{/shift/list-shift}" style="margin-left: 10px;">Cancelar</a>
+    </div>
+</form>
+<div style="margin-top: 30px;">
+    <h3>Atuais Plantonistas Neste Plantão:</h3>
+    <div th:if="${shift.doctorList.empty}">
+        <p>Nenhum plantonista associado a este plantão.</p>
+    </div>
+    <ul th:unless="${shift.doctorList.empty}">
+        <li th:each="doctor : ${shift.doctorList}"
+            th:if="${doctor.id != null}">
+            <span th:text="${doctor.name}"></span> - <span th:text="${doctor.crm}"></span>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

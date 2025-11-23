@@ -16,4 +16,7 @@ public interface DoctorService {
     Doctor create(Doctor doctorToCreate);
 
     void delete(Long id);
+
+    void updateDoctor(Long id, String name, String crm);
+
 }

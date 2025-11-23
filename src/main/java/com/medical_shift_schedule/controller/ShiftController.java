@@ -7,10 +7,7 @@ import com.medical_shift_schedule.model.service.HospitalService;
 import com.medical_shift_schedule.model.service.ShiftService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,20 +54,10 @@ public class ShiftController {
 
     @PostMapping("shift/create-shift")
     public String create(@ModelAttribute Shift shiftToCreate, Model model) {
-
-        System.out.println("--- DEBUG START ---");
-        if (shiftToCreate.getHospital() != null) {
-            System.out.println("Hospital Object exists.");
-            System.out.println("Hospital ID received: " + shiftToCreate.getHospital().getId());
-        } else {
-            System.out.println("Hospital Object is NULL (Frontend/Binding failed)");
-        }
-        System.out.println("--- DEBUG END ---");
-
         try {
             var shiftCreated = shiftService.create(shiftToCreate);
 
-            model.addAttribute("successMessage", "Shift created successfully!");
+            model.addAttribute("successMessage", "Plantão Criado com Sucesso!");
             model.addAttribute("shift", shiftCreated);
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
@@ -81,5 +68,38 @@ public class ShiftController {
         model.addAttribute("allDoctors", doctorService.findAll());
 
         return "shift/create-shift";
+    }
+
+    @GetMapping("shift/list-shift-doctors/{id}")
+    public String listShiftDoctors(@PathVariable Long id, Model model) {
+        List<Doctor> shiftDoctors = shiftService.findDoctorsByShiftId(id);
+        model.addAttribute("doctors", shiftDoctors);
+        return "shift/list-shift-doctors";
+    }
+
+    @GetMapping("shift/{id}/edit")
+    public String showEditShiftForm(@PathVariable Long id, Model model) {
+        Shift shift = shiftService.findById(id);
+        formatDoctorList(shift);
+        model.addAttribute("shift", shift);
+        model.addAttribute("allHospitals", hospitalService.findAll());
+        model.addAttribute("allDoctors", doctorService.findAll());
+        return "shift/edit-shift";
+    }
+
+    @PostMapping("shift/{id}/edit")
+    public String updateShift(@PathVariable Long id, @ModelAttribute Shift shiftToUpdate, Model model) {
+        try {
+            shiftService.updateShiftDoctors(id, shiftToUpdate.getDoctorList());
+            model.addAttribute("successMessage", "Plantão atualizado com sucesso!");
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
+        Shift updatedShift = shiftService.findById(id);
+        formatDoctorList(updatedShift);
+        model.addAttribute("shift", shiftService.findById(id));
+        model.addAttribute("allHospitals", hospitalService.findAll());
+        model.addAttribute("allDoctors", doctorService.findAll());
+        return "shift/edit-shift";
     }
 }

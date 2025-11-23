@@ -5,22 +5,22 @@
     <title>Create Hospital</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/geral.css}"></head>
 <body>
-<p><a th:href="@{/}">Back to Home Page</a></p>
-<h1>Add new Hospital</h1>
+<p><a th:href="@{/}">Voltar à Página Inicial</a></p>
+<h1>Adicionar Novo Hospital</h1>
 
 <div th:if="${successMessage}" class="success-message">
     <p th:text="${successMessage}"></p>
 </div>
 
 <form th:action="@{/hospital/create-hospital}" th:object="${hospital}" method="post">
-    <label for="name">Name:</label>
+    <label for="name">Nome:</label>
     <input type="text" id="name" th:field="*{name}" required/><br/><br/>
 
-    <label for="address">address:</label>
+    <label for="address">Endereço:</label>
     <input type="text" id="address" th:field="*{address}" required/><br/><br/>
 
-    <button type="submit">Save Hospital</button>
+    <button type="submit">Salvar Hospital</button>
 </form>
-<p><a th:href="@{/hospital/list-hospital}">Back to List</a></p>
+<p><a th:href="@{/hospital/list-hospital}">Voltar para Lista</a></p>
 </body>
 </html>

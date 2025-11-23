@@ -2,19 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Doctors List</title>
+    <title>Lista de Médicos(a)</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/geral.css}"></head>
 <body>
-<p><a th:href="@{/}">Back to Home Page</a></p>
-<h1>Doctors</h1>
+<p><a th:href="@{/}">Voltar para Página Principal</a></p>
+<h1>Médicos(a)</h1>
 
 <form th:action="@{/doctor/list}" method="get" style="margin-bottom: 20px;">
-    <label for="name">Search Doctor by Name:</label>
+    <label for="name">Buscar por nome:</label>
     <input type="text" id="name" name="name"
            th:value="${searchName}"
-           placeholder="Enter doctor name">
+           placeholder="Insira o nome do médico(a)">
     <button type="submit">Search</button>
-    <a th:href="@{/doctor/list}">Show All</a>
+    <a th:href="@{/doctor/list}">Mostrar Todos</a>
 </form>
 
 <p th:if="${message}" th:text="${message}" style="color: green;"></p>
@@ -23,9 +23,9 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>Name</th>
+        <th>Nome</th>
         <th>CRM</th>
-        <th>Actions</th>
+        <th>Ações</th>
     </tr>
     </thead>
     <tbody>
@@ -35,9 +35,11 @@
         <td th:text="${doctor.crm}"></td>
         <td>
             <a th:href="@{/doctor/list-doctor-shifts/{id}(id=${doctor.id})}">View</a>
-            <a th:href="@{/doctors/{id}/edit(id=${doctor.id})}">Edit</a> |
-            <form th:action="@{/doctors/{id}/delete(id=${doctor.id})}" method="post" style="display:inline;">
-                <button type="submit">Delete</button>
+            <a th:href="@{/doctor/{id}/edit(id=${doctor.id})}">Edit</a> |
+            <form th:action="@{/doctor/{id}/delete(id=${doctor.id})}" method="post" style="display:inline;">
+                <button type="submit" style="color: red; border: none; background: none; cursor: pointer;">
+                    Excluir
+                </button>
             </form>
         </td>
     </tr>
@@ -45,9 +47,9 @@
 </table>
 
 <div th:if="${doctors != null && doctors.empty}">
-    <p>No doctors found.</p>
+    <p>Nenhum médico(a) encontrado(a)</p>
 </div>
 
-<p><a th:href="@{/doctor/create-doctor}">Create New Doctor</a></p>
+<p><a th:href="@{/doctor/create-doctor}">Adicionar Médico(a)</a></p>
 </body>
 </html>

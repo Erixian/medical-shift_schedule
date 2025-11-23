@@ -2,20 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Shift List</title>
+    <title>Lista de Plantões</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/geral.css}">
 </head>
 <body>
-<p><a th:href="@{/}">Back to Home Page</a></p>
-<h1>Shifts</h1>
+<p><a th:href="@{/}">Voltar à Página Inicial</a></p>
+<h1>Plantões</h1>
 <p th:if="${message}" th:text="${message}" style="color: green;"></p>
 <table>
     <thead>
     <tr>
         <th>ID</th>
-        <th>Star Time</th>
-        <th>End Time</th>
+        <th>Data/Hora inicio</th>
+        <th>Data/Hora fim</th>
         <th>Hospital</th>
+        <th>Numero de Plantonistas</th>
+        <th>Ações</th>
     </tr>
     </thead>
     <tbody>
@@ -24,13 +26,14 @@
         <td th:text="${shift.startTime}"></td>
         <td th:text="${shift.endTime}"></td>
         <td th:text="${shift.hospital.name}"></td>
+        <td th:text="${shift.doctorList.size()}"></td>
         <td>
-
-            </form>
+            <a th:href="@{/shift/{id}/edit(id=${shift.id})}">Editar Plantonistas</a> |
+            <a th:href="@{/shift/list-shift-doctors/{id}(id=${shift.id})}">Visualizar Plantonistas</a>
         </td>
     </tr>
     </tbody>
 </table>
-<p><a th:href="@{/shift/create-shift}">Add New Shift</a></p>
+<p><a th:href="@{/shift/create-shift}">Adicionar Novo Plantão</a></p>
 </body>
 </html>

@@ -83,4 +83,25 @@ public class ShiftServiceImple implements ShiftService {
         return shiftRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Shift not found with ID: " + id));
     }
+
+    @Override
+    public List<Doctor> findDoctorsByShiftId(Long id) {
+        Shift shift = shiftRepository.findById(id).orElseThrow();
+        return shift.getDoctorList();
+    }
+
+    public Shift updateShiftDoctors(Long shiftId, List<Doctor> newDoctorList) {
+        Shift shift = shiftRepository.findById(shiftId).orElseThrow();
+
+        List<Doctor> validDoctors = new ArrayList<>();
+        if (newDoctorList != null) {
+            for (Doctor doctor : newDoctorList) {
+                if (doctor.getId() != null) {
+                    validDoctors.add(doctorRepository.findById(doctor.getId()).orElseThrow());
+                }
+            }
+        }
+        shift.setDoctorList(validDoctors);
+        return shiftRepository.save(shift);
+    }
 }

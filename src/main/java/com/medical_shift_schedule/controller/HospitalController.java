@@ -40,7 +40,7 @@ public class HospitalController {
         var hospitalCreated = hospitalService.create(hospitalToCreate);
         model.addAttribute("successMessage", "Hospital '"
                 + hospitalCreated.getName()
-                + "' created successfully!");
+                + "' adicionado com sucesso!");
 
         model.addAttribute("hospital", new Hospital());
 

@@ -2,38 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create New Shift</title>
+    <title>Criar Novo Plantão</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/geral.css}">
 </head>
 <body>
-<p><a th:href="@{/}">Back to Home Page</a></p>
-<h1>Add New Shift</h1>
+<p><a th:href="@{/}">Voltar à Página Inicial</a></p>
+<h1>Adicionar Novo Plantão</h1>
 
 <div th:if="${successMessage}" class="success-message">
     <p th:text="${successMessage}"></p>
-    <p th:if="${shift.endTime != null}">Calculated End Time: <span th:text="${#temporals.format(shift.endTime, 'dd-MM-yyyy HH:mm')}"></span></p>
+    <p th:if="${shift.endTime != null}">Data/Hora final calculada: <span th:text="${#temporals.format(shift.endTime, 'dd-MM-yyyy HH:mm')}"></span></p>
 </div>
 <div th:if="${errorMessage}" class="error-message">
     <p th:text="${errorMessage}"></p>
 </div>
 
 <form th:action="@{/shift/create-shift}" th:object="${shift}" method="post">
-    <label for="startTime">Start Time:</label>
+    <label for="startTime">Hora/Data início:</label>
     <input type="datetime-local" id="startTime" th:field="*{startTime}" required/><br/><br/>
 
-    <label>End Time:</label>
+    <label>Data/Hora final:</label>
     <span class="read-only-field">
-        This will be calculated automatically.
+        Será calculada automáticamente.
     </span><br/><br/>
 
 
     <label for="hospital">Hospital:</label>
     <select id="hospital" th:field="*{hospital.id}" required>
-        <option value="">-- Select Hospital --</option>
+        <option value="">-- Selecione o Hospital --</option>
         <option th:each="hosp : ${allHospitals}"
                 th:value="${hosp.id}"
                 th:text="${hosp.name}">
-            Hospital Name
+            Nome do Hospital
         </option>
     </select>
 
@@ -41,23 +41,22 @@
     <label>Doctors:</label>
     <div id="doctor-list-container">
         <div th:each="doctor, stat : *{doctorList}" class="doctor-entry">
-            <!-- Using doctorList[i].id to bind specific index -->
             <select th:field="*{doctorList[__${stat.index}__].id}">
-                <option value="">-- Select Doctor --</option>
+                <option value="">-- Selecione o(a) Plantonista --</option>
                 <option th:each="doc : ${allDoctors}"
                         th:value="${doc.id}"
                         th:text="${doc.name}"
                         th:selected="${doctor.id != null and doctor.id == doc.id}">
-                    Doctor Name
+                    Nome do Médico(a)
                 </option>
             </select>
         </div>
     </div>
-    <small style="margin-left: 130px;">Select up to 4 doctors. Leave fields blank for fewer.</small><br/><br/>
+    <small style="margin-left: 130px;">Selecione pelo menos 1 e, no maximo, 4 plantonistas.</small><br/><br/>
 
-    <button type="submit">Create Shift</button>
+    <button type="submit">Criar Plantão</button>
 </form>
 
-<p><a th:href="@{/shift/list-shift}">Back to Shifts List</a></p>
+<p><a th:href="@{/shift/list-shift}">Voltar para Lista de Plantões</a></p>
 </body>
 </html>

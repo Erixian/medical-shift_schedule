@@ -5,21 +5,15 @@ spring:
     password: ${PGPASSWORD}
     driver-class-name: org.postgresql.Driver
 
-    # --- ADD THIS SECTION ---
     hikari:
-      # ... your url, username, password lines remain here ...
 
       hikari:
-        # Maximum time a connection can sit in the pool (Set to 2 minutes)
         max-lifetime: 120000
 
-        # Send a "ping" to the database every 1 minute to keep the line open
         keepalive-time: 60000
 
-        # How long to wait for a new connection before giving up
         connection-timeout: 30000
 
-        # Keep fewer idle connections to save memory
         minimum-idle: 2
         maximum-pool-size: 5
 

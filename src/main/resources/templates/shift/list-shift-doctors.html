@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Plantonistas Deste Plantão</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/geral.css}">
+</head>
+<body>
+<p><a th:href="@{/}">Voltar à Página Inicial</a></p>
+<p><a th:href="@{/shift/list-shift}">Voltar para Lista de Plantões</a></p>
+
+<h1>Plantonistas Neste Plantão:</h1>
+
+<div th:if="${doctors.empty}">
+    <p style="color: #666; font-style: italic;">Não há Plantonistas Associados.</p>
+</div>
+
+<table th:unless="${doctors.empty}">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>CRM</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="doctor : ${doctors}">
+        <td th:text="${doctor.id}"></td>
+        <td th:text="${doctor.name}"></td>
+        <td th:text="${doctor.crm}"></td>
+        <td>
+            <a th:href="@{/doctor/list-doctor-shifts/{id}(id=${doctor.id})}">Visualizar Plantões</a>
+            <a th:href="@{/doctors/{id}/edit(id=${doctor.id})}">Editar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -2,18 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Hospital List</title>
+    <title>Lista de Hospitais</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/geral.css}"></head>
 <body>
-<p><a th:href="@{/}">Back to home page</a></p>
-<h1>Hospitals</h1>
+<p><a th:href="@{/}">Voltar à Página Principal</a></p>
+<h1>Hospitaiss</h1>
 <p th:if="${message}" th:text="${message}" style="color: green;"></p>
 <table>
     <thead>
     <tr>
         <th>Id</th>
-        <th>Name</th>
-        <th>Address</th>
+        <th>Nome</th>
+        <th>Endereço</th>
     </tr>
     </thead>
     <tbody>
@@ -21,15 +21,9 @@
         <td th:text="${hospital.id}"></td>
         <td th:text="${hospital.name}"></td>
         <td th:text="${hospital.address}"></td>
-        <td>
-            <a th:href="@{/hospitals/{id}/edit(id=${hospital.id})}">Edit</a> |
-            <form th:action="@{/hospitals/{id}/delete(id=${hospital.id})}" method="post" style="display:inline;">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
     </tr>
     </tbody>
 </table>
-<p><a th:href="@{/hospital/create-hospital}">Add New Hospital</a></p>
+<p><a th:href="@{/hospital/create-hospital}">Adicionar Novo Hospital</a></p>
 </body>
 </html>

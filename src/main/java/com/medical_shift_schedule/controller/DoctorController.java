@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
+import javax.print.Doc;
 import java.util.List;
 
 @Controller
@@ -19,6 +20,19 @@ public class DoctorController {
     public DoctorController(DoctorService doctorService, ShiftService shiftService) {
         this.doctorService = doctorService;
         this.shiftService = shiftService;
+    }
+
+    @GetMapping("doctor/{id}/edit")
+    public String editDoctor(@PathVariable Long id, Model model) {
+        Doctor doctor = doctorService.findById(id);
+        model.addAttribute("doctor", doctor);
+        return "doctor/edit-doctor";
+    }
+
+    @PostMapping("doctor/{id}/edit")
+    public String updateDoctor(@PathVariable Long id, @RequestParam String name, @RequestParam String crm) {
+        doctorService.updateDoctor(id, name, crm);
+        return "redirect:/doctor/list";
     }
 
     @GetMapping("doctor/list")
@@ -56,15 +70,24 @@ public class DoctorController {
         return "doctor/create-doctor";
     }
 
-    @PostMapping("/doctor/create-doctor")
+    @PostMapping("doctor/create-doctor")
     public String create(@ModelAttribute Doctor doctorToCreate, Model model){
         var doctorCreated = doctorService.create(doctorToCreate);
-        model.addAttribute("successMessage", "Doctor '"
+        model.addAttribute("successMessage", "Médico(a) '"
                             + doctorCreated.getName()
-                            + "' created successfully!");
+                            + "' adicionado com sucesso!");
 
         model.addAttribute("doctor", new Doctor());
-
         return "doctor/create-doctor";
+    }
+
+    @PostMapping("doctor/{id}/delete")
+    public String delete(@PathVariable Long id, Model model) {
+
+        model.addAttribute("successMessage", "Médico(a) '"
+                            + doctorService.findById(id).getName()
+                            + "' deletado com sucesso!");
+        doctorService.delete(id);
+        return "doctor/list-doctor";
     }
 }
